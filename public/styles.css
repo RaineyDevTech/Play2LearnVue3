@@ -1,0 +1,240 @@
+header:after {
+    content: ' ';
+    display: block;
+    border: 2px solid black;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+nav {
+    background: white;
+}
+
+p.foot {
+    position: fixed;
+    bottom: 0px;
+}
+
+nav::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+nav li {
+    float: right;
+}
+
+nav a {
+    display: block;
+    padding: 1rem;
+    text-decoration: underline;
+    color: blue;
+}
+
+li.contains {
+    color: blue;
+}
+
+li.contains ul {
+    display: none;
+}
+
+li.contains:hover ul {
+    background: white;
+    display: block;
+    position: absolute;
+}
+
+li.contains li {
+    float: none;
+    font-size: 0.9rem;
+}
+
+body {
+    margin-bottom: 50px;
+}
+
+#main-page-textbody {
+    padding-bottom: 50px;
+}
+
+span.pTitle {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+p.leftP {
+    margin-left: 15%;
+}
+
+p.rightP {
+    margin-right: 10%;
+}
+
+.blocktext {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+p.blocktext {
+    padding-bottom: 75px;
+}
+
+.quotes {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+#quote-text {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    color: green;
+}
+
+#author {
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+
+form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    padding-bottom: 175px;
+}
+
+label {
+    display: inline-block;
+    width: 140px;
+}
+
+label,
+input {
+    padding-bottom: 5px;
+}
+
+label.thirteen {
+    padding-top: 10px;
+}
+
+h1.form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+#jax-off {
+    padding-top: 15px;
+}
+
+div.input {
+    padding-bottom: 5px;
+}
+
+.button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.game-menu,
+div#gameover {
+    text-align: center;
+}
+
+button.go,
+button.login,
+button.register,
+button.play,
+button#playagain,
+#submitbutton,
+#resetbutton {
+    color: white;
+    background-color: green;
+}
+
+ol.game-menu {
+    margin-top: 80px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul.bottom {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+footer::before {
+    content: ' ';
+    display: block;
+    border: 2px solid black;
+}
+
+table {
+    table-layout: fixed;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    margin-bottom: 10px;
+    text-align: center;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    color: green;
+    border: solid black 2px;
+}
+
+input[type="button"] {
+    background-color: rgb(18, 163, 7);
+    color: white;
+    border: solid black 2px;
+    height: 40px;
+    width: 100%;
+}
+
+p#quizquestion,
+p#operationOption {
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+p#message,
+p#score,
+p#gametime,
+p#icheck {
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+}
+
+#finalscore {
+    font-size: 80px;
+    font-weight: bold;
+}
+
+#huntgame,
+#gametitle {
+    text-align: center;
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/cddf778442.js" crossorigin="anonymous"></script>
+
+    <script src="ajax.js"></script>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <h1>Play2Learn logo</h1>
+        <nav class="top">
+            <ul>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="contains"><a>Games</a>
+                    <ul>
+                        <li><a>Anagram Hunt</a></li>
+                        <li><a href="C:\Webucator\Play2Learn\games\math-facts.html">Math Facts Practice</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="registerform">
+        <h1 class="form">Register</h1>
+        <form id="register" method="post" action="javascript:alert('Form Submitted')">
+
+            <di>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+    </div>
+
+    <div>
+        <label for="pwd">Password:</label>
+        <input type="pwd" name="pwd" id="pwd" required>
+    </div>
+
+    <div>
+        <label for="repPwd">Repeat Password:</label>
+        <input type="repPwd" name="repPwd" id="repPwd" required>
+    </div>
+    <div class="button">
+        <input name="submit" id="submitbutton" type="submit">
+        <button action="javascript:alert('Form Submitted')">REGISTER</button>
+    </div>
+    <div id="jax-off">
+        <a href="#" id="swapLink" onclick="swapDiv()">Have an account? Login</a>
+    </div>
+    </form>
+    </div>
+
+
+    <footer>
+        <p class="foot">&copy; 2020 Play2Learn</p>
+        <nav class="bottom">
+            <ul class="bottom">
+                <li>
+                    <a href="contact-us.html">
+                        <i class="fas fa-envelope"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com">
+                        <i class="fab fa-facebook-square "></i></a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com">
+                        <i class="fab fa-instagram "></i></a>
+                </li>
+                <li>
+                    <a href="https://twitter.com">
+                        <i class="fab fa-twitter-square fa-2xl "></i></a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+
+</html>
