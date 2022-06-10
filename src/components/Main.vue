@@ -20,8 +20,11 @@
     </div>
   </div>
   <div class="row text-secondary mx-1 my-2" id="word">
-    <Word :answer="input" :list="list" :wordLength="wordLength" :score="score" />
+    <Word :list="list" :wordsLeft="wordsLeft" />
   </div>
+  <div class="row">
+     <input class="form-control" v-model="input" @keyup.enter="setInput(input)">
+     </div>
   <div>
   <button class="btn btn-success mx-1 my-3" @click="endGame">Game Over</button>
   </div>
@@ -86,6 +89,7 @@ export default {
       anagrams:anagrams,
       words:Array,
       list: Array,
+      wordsLeft: 0,
       timeLeft: 0
     }
   },
@@ -115,6 +119,10 @@ export default {
       }
     },
 
+    clear() {
+        this.input = '';
+    },
+
 
 
       restart() {
@@ -126,36 +134,57 @@ export default {
       
     play() {
       this.screen = "play";
+      this.clear();
       this.startTimer();
       this.words= anagrams[this.wordLength];
       //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
       this.list=this.words[Math.floor(Math.random()*this.words.length)];
-      var list =this.list;
-      console.log(list);
-      return list;
+      //var list =this.list;
+      //console.log(list);
+      this.wordsLeft = this.list.length;
+      return [this.list, this.wordsLeft];
     },
 
-     checkAnswer(input, score){
-
+      checkAnswer(input){
+        
+        alert("checkAnswer method running");
+        alert("your answer is : " +input);
+        alert("score is: " + this.score);
+        alert("the list is "  + this.list);
+        alert("the length of the list is : " + this.list.length);
         for(let i=0; i< this.list.length; i++){
-            if(input == this.list[i]){
-              score++;
-              alert(score);
+          alert("for loop running ");
+          alert(input);
+          alert("this.score is " + this.score);
+          alert("the loop index is now : " + i);
+            if(input === this.list[i]){
+              
+           this.score++;
+           this.wordsLeft--;
+
+              alert("good answer " + input + " is an anagram");
+              alert("score is incremented: " + this.score);
+              //alert("your score is " + this.score);
+              //this.score = score;
+              alert("score is now : " + this.score);
+              this.clear();
+              
             }
-            return score;
+            
+            
         }
 
       },
 
-
-    setInput(value) {
-      this.input += String(value);
-      alert('well fuck me');
+      
+       setInput(input) {
+      this.input = String(input);
+      alert(this.input);
+      this.checkAnswer(this.input);
     },
 
-    clear() {
-        this.input = '';
-    },
+
+    
 
   },
 };
