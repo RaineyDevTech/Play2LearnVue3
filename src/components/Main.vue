@@ -1,8 +1,8 @@
 <template>
  <main id="main-container">
-   <div v-if="screen === 'config'" id="config-container">
-<SelectInput :currentValue="wordLength" :wordLength="wordLength" label="WordLength" id="wordLength" v-model:currentValue="wordLength" 
-:options="wordLengths" />
+<div v-if="screen === 'config'" id="config-container">
+  <SelectInput label="Word Length" v-model:currentValue="wordLength" 
+  :options="wordLengths" />
 
 <PlayButton @play-button-click="play" />
 
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="row text-secondary mx-1 my-2" id="word">
-    <Word :list="list" :wordsLeft="wordsLeft" />
+    <Word :list="list" :wordsLeft="wordsLeft" :firstWord="firstWord"/>
   </div>
   <div class="row">
      <input class="form-control" v-model="input" @keyup.enter="setInput(input)">
@@ -56,11 +56,7 @@ import Word from './Word';
 
 import anagrams from './anagrams.js';
 
-
-
-
-
-export default {
+ export default {
     // eslint-disable-next-line
   name: 'Main',
   components: {
@@ -82,15 +78,17 @@ export default {
  
 
       screen: 'config',
-      wordLength: '0',
+      wordLength: Number,
       input: "",
-      score:0,
+      score:5,
       gameLength: 60,
       anagrams:anagrams,
       words:Array,
       list: Array,
       wordsLeft: 0,
-      timeLeft: 0
+      firstWord: String,
+      timeLeft: 0,
+      popped: Array
     }
   },
 
@@ -103,7 +101,12 @@ export default {
     },
   
     endGame(){
+      alert("running endGame()");
       this.screen = "endGame";
+     /* for(let i=0; i < this.popped.length; i++){
+        this.list.push(this.popped[i]);
+      } */
+      
     },
 
     startTimer() {
@@ -123,69 +126,83 @@ export default {
         this.input = '';
     },
 
-
-
-      restart() {
-        this.score = 0;
-       // $('select').prop('selectedIndex', 0);
-        this.startTimer();
-        this.play();
+    restart() {
+      this.score = 0;
+      // $('select').prop('selectedIndex', 0);
+      //this.startTimer();
+      this.play();
       },
       
     play() {
+     // alert(this.wordLength);
+      this.score = 0;
       this.screen = "play";
       this.clear();
       this.startTimer();
-      this.words= anagrams[this.wordLength];
-      //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
-      this.list=this.words[Math.floor(Math.random()*this.words.length)];
-      //var list =this.list;
-      //console.log(list);
-      this.wordsLeft = this.list.length;
-      return [this.list, this.wordsLeft];
+      this.getWords();
     },
 
-      checkAnswer(input){
+    getWords(){
+      this.words= anagrams[this.wordLength];
+      alert("this.words : { \n  " + this.words + " }");
+      //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
+      this.list=this.words[Math.floor(Math.random()*this.words.length)];
+      //try alerting the Math.floor(Math.random()*this.words.length)
+      this.wordsLeft = this.list.length;
+      if(this.wordsLeft <= 0){
+        alert("null array reset");
+        this.play();
+      }
+      this.firstWord = this.list[0];
+      //alert("with target word : " + this.list);
+      //this.list.splice(0,1);
+      //alert("spliced list is : " + this.list);
+      //this.wordsLeft = this.list.length;
+      alert("wordsLeft = " + this.wordsLeft);
+      return [this.list, this.wordsLeft, this.firstWord];
+    },
+    
+    //method to check answer for anagram hunt
+    checkAnswer(input){
+      //alert("checkAnswer method running");
+      const listArray = [];
+      for (let i=0; i<this.list.length; i++){
+        listArray.push(this.list[i]);
+      }
+      alert(listArray);
+      alert("your answer is : " + this.input);
+      alert("the list is "  + this.list);
+      for(let i=0; i< this.list.length; i++){
+        //alert("for loop running the loop index is now : " + i);
+        alert("checking answer: " + this.input + " against : " + this.list[i]);
+        if(this.input === this.list[i] && this.input != this.firstWord){
+        //this.popped.push(this.input);
+          alert("good answer " + this.input + " is an anagram");
+          console.log("using the input var " + input);
+          this.list.splice(i, 1);
+          alert(this.input + " is removed from list " + this.list);
+          this.score++;
+          this.wordsLeft--;
+          alert("score is incremented: " + this.score);
+          alert("score is now : " + this.score);
+          //this.popped.push(this.input);
+          alert("added " + this.input + " to popped");
+          if(this.wordsLeft == 1){
+            this.endGame();
+          }
         
-        alert("checkAnswer method running");
-        alert("your answer is : " +input);
-        alert("score is: " + this.score);
-        alert("the list is "  + this.list);
-        alert("the length of the list is : " + this.list.length);
-        for(let i=0; i< this.list.length; i++){
-          alert("for loop running ");
-          alert(input);
-          alert("this.score is " + this.score);
-          alert("the loop index is now : " + i);
-            if(input === this.list[i]){
-              
-           this.score++;
-           this.wordsLeft--;
-
-              alert("good answer " + input + " is an anagram");
-              alert("score is incremented: " + this.score);
-              //alert("your score is " + this.score);
-              //this.score = score;
-              alert("score is now : " + this.score);
-              this.clear();
-              
+      this.clear();
             }
             
-            
-        }
-
+          }
+        this.clear();
       },
 
       
-       setInput(input) {
-      this.input = String(input);
-      alert(this.input);
-      this.checkAnswer(this.input);
+      setInput(input) {
+        this.input = String(input);
+        this.checkAnswer(this.input);
     },
-
-
-    
-
   },
 };
 

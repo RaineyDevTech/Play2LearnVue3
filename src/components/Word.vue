@@ -1,7 +1,7 @@
 <template>
   <div id="equation" class="row">
     <div>
-      <p class="text-center col-centered">{{list[0]}} ({{wordsLeft}}  left)</p>
+      <p class="text-center col-centered">{{firstWord}} ({{wordsLeft-1}}  left)</p>
     </div>
   </div>
 </template>
@@ -16,7 +16,8 @@
      props: {
       
       list:Array,
-      wordsLeft:Number
+      wordsLeft:Number,
+      firstWord:String
     },
 
     data: function(){
