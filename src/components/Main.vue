@@ -4,7 +4,7 @@
   <SelectInput label="Word Length" v-model:currentValue="wordLength" 
   :options="wordLengths" />
 
-<PlayButton @play-button-click="play" />
+<PlayButton @play-button-click="restart" />
 
 </div>
 
@@ -25,6 +25,7 @@
   <div class="row">
      <input class="form-control" v-model="input" @keyup.enter="setInput(input)">
      </div>
+     <AnswerList />
   <div>
   <button class="btn btn-success mx-1 my-3" @click="endGame">Game Over</button>
   </div>
@@ -53,6 +54,7 @@ import PlayButton from './PlayButton';
 import Score from './Score';
 import Timer from './Timer';
 import Word from './Word';
+import AnswerList from './AnswerList';
 
 import anagrams from './anagrams.js';
 
@@ -64,7 +66,8 @@ import anagrams from './anagrams.js';
     PlayButton,
     Score,
     Timer,
-    Word
+    Word,
+    AnswerList
     },
 
   data: function() {
@@ -80,7 +83,7 @@ import anagrams from './anagrams.js';
       screen: 'config',
       wordLength: Number,
       input: "",
-      score:5,
+      score:0,
       gameLength: 60,
       anagrams:anagrams,
       words:Array,
@@ -88,7 +91,7 @@ import anagrams from './anagrams.js';
       wordsLeft: 0,
       firstWord: String,
       timeLeft: 0,
-      popped: Array
+      answerList:[]
     }
   },
 
@@ -102,6 +105,13 @@ import anagrams from './anagrams.js';
   
     endGame(){
       alert("running endGame()");
+      alert(this.list.length);
+      if(this.list.length>0){
+        for(let i=0; i<this.list.length; i++){
+        this.list.pop(this.list[i]);
+      }
+      alert("after purge this.list.length = " + this.list.length);
+      }
       this.screen = "endGame";
      /* for(let i=0; i < this.popped.length; i++){
         this.list.push(this.popped[i]);
@@ -116,7 +126,8 @@ import anagrams from './anagrams.js';
           this.timeLeft--;
           if (this.timeLeft === 0) {
             clearInterval(this.timer);
-            this.screen = "endGame";
+            //this.screen = "endGame";
+            this.endGame();
           }
         }, 1000)
       }
@@ -128,36 +139,32 @@ import anagrams from './anagrams.js';
 
     restart() {
       this.score = 0;
-      // $('select').prop('selectedIndex', 0);
-      //this.startTimer();
+      this.startTimer();
       this.play();
       },
       
     play() {
-     // alert(this.wordLength);
-      this.score = 0;
       this.screen = "play";
       this.clear();
-      this.startTimer();
       this.getWords();
     },
 
     getWords(){
       this.words= anagrams[this.wordLength];
+      if(this.words.length == 0){
+        alert("All " + this.wordLength + " word length puzzles solved!")
+        this.endgame();
+      }
       alert("this.words : { \n  " + this.words + " }");
       //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
       this.list=this.words[Math.floor(Math.random()*this.words.length)];
       //try alerting the Math.floor(Math.random()*this.words.length)
       this.wordsLeft = this.list.length;
-      if(this.wordsLeft <= 0){
+      if(this.wordsLeft <= 1){
         alert("null array reset");
         this.play();
       }
       this.firstWord = this.list[0];
-      //alert("with target word : " + this.list);
-      //this.list.splice(0,1);
-      //alert("spliced list is : " + this.list);
-      //this.wordsLeft = this.list.length;
       alert("wordsLeft = " + this.wordsLeft);
       return [this.list, this.wordsLeft, this.firstWord];
     },
@@ -176,7 +183,8 @@ import anagrams from './anagrams.js';
         //alert("for loop running the loop index is now : " + i);
         alert("checking answer: " + this.input + " against : " + this.list[i]);
         if(this.input === this.list[i] && this.input != this.firstWord){
-        //this.popped.push(this.input);
+          this.answerList.push(this.input);
+          alert("this list of correct answers is : " + this.answerList);
           alert("good answer " + this.input + " is an anagram");
           console.log("using the input var " + input);
           this.list.splice(i, 1);
@@ -184,11 +192,17 @@ import anagrams from './anagrams.js';
           this.score++;
           this.wordsLeft--;
           alert("score is incremented: " + this.score);
-          alert("score is now : " + this.score);
-          //this.popped.push(this.input);
-          alert("added " + this.input + " to popped");
           if(this.wordsLeft == 1){
+            alert("solved this one !");
+            if(this.timeLeft > 0){
+              alert("keep playing with next set of anagrams");
+              this.list.pop(this.firstWord);
+              this.play();
+            }
+            else{
             this.endGame();
+            }
+            
           }
         
       this.clear();
