@@ -24,10 +24,16 @@
   </div>
   <div class="row">
      <input class="form-control" v-model="input" @keyup.enter="setInput(input)">
-     </div>
-     <AnswerList />
+  </div>
   <div>
-  <button class="btn btn-success mx-1 my-3" @click="endGame">Game Over</button>
+    
+
+    <ol>
+      <li v-for="answers in answerList" :key="answers">{{answers}}</li>
+    </ol>
+  </div>
+  <div>
+    <button class="btn btn-success mx-1 my-3" @click="endGame">Game Over</button>
   </div>
 </div>
 
@@ -54,11 +60,11 @@ import PlayButton from './PlayButton';
 import Score from './Score';
 import Timer from './Timer';
 import Word from './Word';
-import AnswerList from './AnswerList';
+//import AnswerList from './AnswerList';
 
 import anagrams from './anagrams.js';
 
- export default {
+export default {
     // eslint-disable-next-line
   name: 'Main',
   components: {
@@ -67,7 +73,7 @@ import anagrams from './anagrams.js';
     Score,
     Timer,
     Word,
-    AnswerList
+    
     },
 
   data: function() {
@@ -91,11 +97,10 @@ import anagrams from './anagrams.js';
       wordsLeft: 0,
       firstWord: String,
       timeLeft: 0,
-      answerList:[]
+      answerList:[],
+      answerObj: {}
     }
   },
-
- 
 
   methods: {
 
@@ -126,7 +131,6 @@ import anagrams from './anagrams.js';
           this.timeLeft--;
           if (this.timeLeft === 0) {
             clearInterval(this.timer);
-            //this.screen = "endGame";
             this.endGame();
           }
         }, 1000)
@@ -141,6 +145,7 @@ import anagrams from './anagrams.js';
       this.score = 0;
       this.startTimer();
       this.play();
+      this.answerList = [];
       },
       
     play() {
@@ -155,7 +160,7 @@ import anagrams from './anagrams.js';
         alert("All " + this.wordLength + " word length puzzles solved!")
         this.endgame();
       }
-      alert("this.words : { \n  " + this.words + " }");
+      //alert("this.words : { \n  " + this.words + " }");
       //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
       this.list=this.words[Math.floor(Math.random()*this.words.length)];
       //try alerting the Math.floor(Math.random()*this.words.length)
@@ -165,7 +170,7 @@ import anagrams from './anagrams.js';
         this.play();
       }
       this.firstWord = this.list[0];
-      alert("wordsLeft = " + this.wordsLeft);
+      //alert("wordsLeft = " + this.wordsLeft);
       return [this.list, this.wordsLeft, this.firstWord];
     },
     
@@ -183,7 +188,10 @@ import anagrams from './anagrams.js';
         //alert("for loop running the loop index is now : " + i);
         alert("checking answer: " + this.input + " against : " + this.list[i]);
         if(this.input === this.list[i] && this.input != this.firstWord){
+          
           this.answerList.push(this.input);
+          //this.answerObj.answer=this.input;
+         // alert("the answerObj = {" + this.answerObj + "}");
           alert("this list of correct answers is : " + this.answerList);
           alert("good answer " + this.input + " is an anagram");
           console.log("using the input var " + input);
@@ -209,10 +217,9 @@ import anagrams from './anagrams.js';
             }
             
           }
-        this.clear();
+      this.clear();
       },
 
-      
       setInput(input) {
         this.input = String(input);
         this.checkAnswer(this.input);
