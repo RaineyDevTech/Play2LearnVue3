@@ -60,8 +60,6 @@ import PlayButton from './PlayButton';
 import Score from './Score';
 import Timer from './Timer';
 import Word from './Word';
-//import AnswerList from './AnswerList';
-
 import anagrams from './anagrams.js';
 
 export default {
@@ -110,18 +108,8 @@ export default {
   
     endGame(){
       alert("running endGame()");
-      alert(this.list.length);
-      if(this.list.length>0){
-        for(let i=0; i<this.list.length; i++){
-        this.list.pop(this.list[i]);
-      }
-      alert("after purge this.list.length = " + this.list.length);
-      }
+      this.list = [];
       this.screen = "endGame";
-     /* for(let i=0; i < this.popped.length; i++){
-        this.list.push(this.popped[i]);
-      } */
-      
     },
 
     startTimer() {
@@ -145,11 +133,11 @@ export default {
       this.score = 0;
       this.startTimer();
       this.play();
-      this.answerList = [];
       },
       
     play() {
       this.screen = "play";
+      this.answerList = [];
       this.clear();
       this.getWords();
     },
@@ -163,20 +151,17 @@ export default {
       //alert("this.words : { \n  " + this.words + " }");
       //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
       this.list=this.words[Math.floor(Math.random()*this.words.length)];
-      //try alerting the Math.floor(Math.random()*this.words.length)
       this.wordsLeft = this.list.length;
       if(this.wordsLeft <= 1){
         alert("null array reset");
         this.play();
       }
       this.firstWord = this.list[0];
-      //alert("wordsLeft = " + this.wordsLeft);
       return [this.list, this.wordsLeft, this.firstWord];
     },
     
     //method to check answer for anagram hunt
     checkAnswer(input){
-      //alert("checkAnswer method running");
       const listArray = [];
       for (let i=0; i<this.list.length; i++){
         listArray.push(this.list[i]);
@@ -185,13 +170,9 @@ export default {
       alert("your answer is : " + this.input);
       alert("the list is "  + this.list);
       for(let i=0; i< this.list.length; i++){
-        //alert("for loop running the loop index is now : " + i);
         alert("checking answer: " + this.input + " against : " + this.list[i]);
         if(this.input === this.list[i] && this.input != this.firstWord){
-          
           this.answerList.push(this.input);
-          //this.answerObj.answer=this.input;
-         // alert("the answerObj = {" + this.answerObj + "}");
           alert("this list of correct answers is : " + this.answerList);
           alert("good answer " + this.input + " is an anagram");
           console.log("using the input var " + input);

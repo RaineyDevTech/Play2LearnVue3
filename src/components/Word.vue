@@ -24,12 +24,8 @@
       return{
         input: ""
       }
-    },
-
-    methods: {
-      }
-   
-};
+    },   
+  };
 
  
   
