@@ -32,9 +32,6 @@
       <li v-for="answers in answerList" :key="answers">{{answers}}</li>
     </ol>
   </div>
-  <div>
-    <button class="btn btn-success mx-1 my-3" @click="endGame">Game Over</button>
-  </div>
 </div>
 
 <div v-else-if="screen === 'endGame'" id="game-container" class="text-center">
@@ -95,8 +92,7 @@ export default {
       wordsLeft: 0,
       firstWord: String,
       timeLeft: 0,
-      answerList:[],
-      answerObj: {}
+      answerList:[]
     }
   },
 
@@ -107,8 +103,7 @@ export default {
     },
   
     endGame(){
-      alert("running endGame()");
-      this.list = [];
+      //alert("running endGame()");
       this.screen = "endGame";
     },
 
@@ -145,15 +140,15 @@ export default {
     getWords(){
       this.words= anagrams[this.wordLength];
       if(this.words.length == 0){
-        alert("All " + this.wordLength + " word length puzzles solved!")
+        //alert("All " + this.wordLength + " word length puzzles solved!")
         this.endgame();
       }
       //alert("this.words : { \n  " + this.words + " }");
-      //console.log(this.words[Math.floor(Math.random()*this.words.length)]);
+      //alert("this.words.length : " + this.words.length);
       this.list=this.words[Math.floor(Math.random()*this.words.length)];
       this.wordsLeft = this.list.length;
       if(this.wordsLeft <= 1){
-        alert("null array reset");
+        //alert("null array reset");
         this.play();
       }
       this.firstWord = this.list[0];
@@ -166,30 +161,26 @@ export default {
       for (let i=0; i<this.list.length; i++){
         listArray.push(this.list[i]);
       }
-      alert(listArray);
-      alert("your answer is : " + this.input);
-      alert("the list is "  + this.list);
+      //alert(listArray);
+      //alert("your answer is : " + this.input);
+      //alert("the list is "  + this.list);
       for(let i=0; i< this.list.length; i++){
-        alert("checking answer: " + this.input + " against : " + this.list[i]);
+        //alert("checking answer: " + this.input + " against : " + this.list[i]);
         if(this.input === this.list[i] && this.input != this.firstWord){
           this.answerList.push(this.input);
-          alert("this list of correct answers is : " + this.answerList);
-          alert("good answer " + this.input + " is an anagram");
           console.log("using the input var " + input);
           this.list.splice(i, 1);
-          alert(this.input + " is removed from list " + this.list);
           this.score++;
           this.wordsLeft--;
-          alert("score is incremented: " + this.score);
           if(this.wordsLeft == 1){
-            alert("solved this one !");
+           // alert("solved this one !");
             if(this.timeLeft > 0){
-              alert("keep playing with next set of anagrams");
               this.list.pop(this.firstWord);
               this.play();
             }
             else{
-            this.endGame();
+              this.list = [];
+              this.endGame();
             }
             
           }
